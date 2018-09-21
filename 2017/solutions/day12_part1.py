@@ -1,0 +1,30 @@
+import sys
+import collections
+import queue
+
+def main():
+    graph = collections.defaultdict(set)
+    visited = collections.defaultdict(int)
+    for line in sys.stdin:
+        parts = line.strip().split(' <-> ')
+        parent = int(parts[0].strip())
+        if len(parts) > 1:
+            for child in map(int, map(str.strip, parts[1].strip().split(', '))):
+                graph[parent].add(child)
+                graph[child].add(parent)
+
+    
+    ans = 0
+    q = queue.Queue()
+    q.put(0)
+    while not q.empty():
+        node = q.get()
+        visited[node] = 1
+        ans += 1
+        for child in graph[node]:
+            if not visited[child]:
+                q.put(child)
+    print(ans)
+
+if __name__ == '__main__':
+    main()
