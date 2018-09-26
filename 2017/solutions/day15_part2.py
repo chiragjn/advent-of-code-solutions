@@ -1,7 +1,7 @@
-'''
+"""
 Tried doing some functional programming stuff
 This runs much slower than I expected. I suck at this :|
-'''
+"""
 
 import functools
 
