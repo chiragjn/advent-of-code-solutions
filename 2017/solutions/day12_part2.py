@@ -1,6 +1,8 @@
-import sys
 import collections
+
 import queue
+import sys
+
 
 def main():
     graph = collections.defaultdict(set)
@@ -13,11 +15,10 @@ def main():
                 graph[parent].add(child)
                 graph[child].add(parent)
 
-    
     ans = 0
     for rnode in graph:
         if not visited[rnode]:
-            ans += 1    
+            ans += 1
             q = queue.Queue()
             q.put(rnode)
             while not q.empty():
@@ -27,6 +28,7 @@ def main():
                     if not visited[child]:
                         q.put(child)
     print(ans)
+
 
 if __name__ == '__main__':
     main()

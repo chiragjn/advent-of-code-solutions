@@ -8,5 +8,6 @@ def main():
         ans += l[-1] - l[0]
     print(ans)
 
+
 if __name__ == '__main__':
     main()

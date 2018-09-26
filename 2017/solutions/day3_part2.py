@@ -1,5 +1,6 @@
 import collections
 
+
 def get_xy(number):
     if number == 1:
         return 0, 0
@@ -11,12 +12,12 @@ def get_xy(number):
         z = (k + 1) * (k + 1)
         x += 1
         y -= 1
-    
+
     ops = [lambda x, y: (x - 1, y),
            lambda x, y: (x, y + 1),
            lambda x, y: (x + 1, y),
            lambda x, y: (x, y - 1)]
-    
+
     if z == number:
         return x, y
 
@@ -27,15 +28,18 @@ def get_xy(number):
             x, y = op(x, y)
             if z == number:
                 return x, y
-    
+
     return None, None
+
 
 def get_neighbors(x, y):
     return [(x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
             (x, y - 1), (x, y + 1),
             (x + 1, y - 1), (x + 1, y), (x + 1, y + 1)]
 
+
 grid = collections.defaultdict(int)
+
 
 def main():
     n = int(input())
@@ -49,6 +53,7 @@ def main():
         i += 1
 
     print(z)
+
 
 if __name__ == '__main__':
     main()

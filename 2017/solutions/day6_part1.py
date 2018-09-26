@@ -13,12 +13,13 @@ def main():
             i = (i + 1) % len(state)
             state[i] += 1
             val -= 1
-        
+
         if tuple(state) in states:
             print(count)
             break
 
         states.add(tuple(state))
+
 
 if __name__ == '__main__':
     main()

@@ -1,5 +1,6 @@
 import sys
 
+
 def main():
     max_ans = 5000001
     # Not a generic solution that covers all possible cases
@@ -17,6 +18,7 @@ def main():
         if good:
             print(i)
             break
+
 
 if __name__ == '__main__':
     main()

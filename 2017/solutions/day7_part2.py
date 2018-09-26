@@ -1,8 +1,9 @@
-import sys
 import collections
+import sys
 
 graph = collections.defaultdict(set)
 node_weights = {}
+
 
 def check(node, i):
     child_names, child_weights = [], []
@@ -13,8 +14,7 @@ def check(node, i):
         else:
             child_names.append(child_name)
             child_weights.append(weight)
-    
-    
+
     if len(set(child_weights)) > 1:
         counter = collections.Counter(child_weights)
         correct_sum = counter.most_common(1)[0][0]
@@ -22,10 +22,11 @@ def check(node, i):
         other_sum = counter.most_common(1)[0][0]
         imbalanced_child = child_names[child_weights.index(other_sum)]
         return True, node_weights[imbalanced_child] + (correct_sum - other_sum)
-    
+
     # Uncomment for nice debug tree 
     # print(('| ' * (i)) + '-' + node + ' ' + str(sum(child_weights) + node_weights[node]))
     return False, sum(child_weights) + node_weights[node]
+
 
 def main():
     global graph, node_weights
@@ -55,6 +56,7 @@ def main():
     if not solution_found:
         raise ValueError('Input graph must have an imbalance')
     print(weight)
+
 
 if __name__ == '__main__':
     main()

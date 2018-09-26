@@ -8,5 +8,6 @@ def main():
             ans += int(s[i])
     print(ans)
 
+
 if __name__ == '__main__':
     main()

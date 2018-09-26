@@ -11,9 +11,9 @@ def solve(inp):
     for i in range(64):
         for length in lengths:
             to_commit, z = [], 0
-            for j in range(pointer + length - 1, pointer - 1,  -1):
+            for j in range(pointer + length - 1, pointer - 1, -1):
                 to_commit.append(nums[j % len(nums)])
-            
+
             for j in range(pointer, pointer + length):
                 nums[j % len(nums)] = to_commit[z]
                 z += 1

@@ -15,12 +15,13 @@ def main():
             i = (i + 1) % len(state)
             state[i] += 1
             val -= 1
-        
+
         if tuple(state) in states:
             print(cycle - states[tuple(state)])
             break
 
         states[tuple(state)] = cycle
+
 
 if __name__ == '__main__':
     main()

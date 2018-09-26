@@ -1,5 +1,6 @@
 from day10_part2 import solve
 
+
 def main():
     inp = input().strip()
     ans = 0
@@ -9,6 +10,7 @@ def main():
                            for c in hsh])
         ans += bin_hsh.count('1')
     print(ans)
+
 
 if __name__ == '__main__':
     main()
