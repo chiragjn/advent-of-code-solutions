@@ -1,3 +1,4 @@
+import collections
 import itertools
 import re
 import sys
@@ -48,7 +49,6 @@ class Point(object):
 
             sol1 = float(minus_b + (bsq_4ac ** 0.5)) / float(two_a)
             sol2 = float(minus_b - (bsq_4ac ** 0.5)) / float(two_a)
-
             if sol1 >= 0 and abs(sol1 - int(sol1)) < eps:
                 solutions.append(int(sol1))
 
@@ -96,18 +96,23 @@ def main():
             )
         )
 
-    all_collisions = []
+    all_collisions = collections.defaultdict(list)
     still_alive = [True for _ in points]
     for i in range(len(points)):
         for j in range(i + 1, len(points)):
             for t in points[i].get_collisions(points[j]):
-                all_collisions.append((t, i, j))
+                all_collisions[t].append((i, j,))
 
-    all_collisions.sort(key=lambda tup: tup[0])
-    for t, i, j in all_collisions:
-        if still_alive[i] and still_alive[j]:
-            still_alive[i] = False
-            still_alive[j] = False
+    times = sorted(all_collisions.keys())
+    for t in times:
+        kill_points = set()
+        for i, j in all_collisions[t]:
+            if still_alive[i] and still_alive[j]:
+                kill_points.add(i)
+                kill_points.add(j)
+
+        for point_ind in kill_points:
+            still_alive[point_ind] = False
 
     print(still_alive.count(True))
 
