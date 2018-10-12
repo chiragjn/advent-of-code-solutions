@@ -1,5 +1,6 @@
 import collections
 import itertools
+import math
 import re
 import sys
 
@@ -44,15 +45,26 @@ class Point(object):
             bsq_4ac = (_b * _b) - (4 * _a * _c)
             two_a = 2 * _a
             minus_b = -_b
-            if bsq_4ac < 0 or two_a == 0:
+
+            if bsq_4ac < 0:
                 return solutions
 
-            sol1 = float(minus_b + (bsq_4ac ** 0.5)) / float(two_a)
-            sol2 = float(minus_b - (bsq_4ac ** 0.5)) / float(two_a)
-            if sol1 >= 0 and abs(sol1 - int(sol1)) < eps:
+            if two_a == 0:
+                if _b == 0:
+                    return solutions
+                else:
+                    sol1 = float(-_c) / float(_b)
+                    if sol1 >= 0 and abs(sol1 - int(sol1)) <= eps:
+                        solutions.append(int(sol1))
+                    return solutions
+
+            sol1 = float(minus_b + math.sqrt(bsq_4ac)) / float(two_a)
+            sol2 = float(minus_b - math.sqrt(bsq_4ac)) / float(two_a)
+
+            if sol1 >= 0 and abs(sol1 - int(sol1)) <= eps:
                 solutions.append(int(sol1))
 
-            if sol2 >= 0 and abs(sol2 - int(sol2)) < eps:
+            if sol2 >= 0 and abs(sol2 - int(sol2)) <= eps:
                 solutions.append(int(sol2))
 
             return solutions
@@ -82,6 +94,35 @@ class Point(object):
 
 
 pattern = re.compile(r'[<>=pav, ]+')
+
+
+def solve_brute():
+    points = []
+    for line in sys.stdin:
+        pva = list(map(int, pattern.sub(' ', line.strip()).strip().split()))
+        points.append(pva)
+
+    still_alive = [True for _ in points]
+    for t in range(50):
+        collisions = collections.defaultdict(set)
+        for i, point in enumerate(points):
+            if still_alive[i]:
+                point[3] += point[6]
+                point[4] += point[7]
+                point[5] += point[8]
+
+                point[0] += point[3]
+                point[1] += point[4]
+                point[2] += point[5]
+                collisions[(point[0], point[1], point[2],)].add(i)
+        for k, v in collisions.items():
+            if len(v) > 1:
+                for vi in v:
+                    if vi == 145:
+                        print(v)
+                    still_alive[vi] = False
+
+    print(still_alive.count(True))
 
 
 def main():
