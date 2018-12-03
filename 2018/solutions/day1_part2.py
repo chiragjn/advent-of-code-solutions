@@ -1,6 +1,7 @@
 import sys
 import itertools
 
+
 def add(a, b):
     return a + b
 
