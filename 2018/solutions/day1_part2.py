@@ -1,24 +1,27 @@
-import sys
 import itertools
+import sys
+from typing import Dict, Iterable, Callable, Tuple, List
 
 
-def add(a, b):
+def add(a: int, b: int) -> int:
     return a + b
 
 
-def sub(a, b):
+def sub(a: int, b: int) -> int:
     return a - b
 
 
-ops = {'+': add, '-': sub}
+OpType = Callable[[int, int], int]
+
+ops: Dict[str, OpType] = {'+': add, '-': sub}
 
 
-def solve(input_iter):
+def solve(input_iter: Iterable[str]) -> int:
     ans = 0
     cached = set()
     cached.add(ans)
 
-    fixed_input = []
+    fixed_input: List[Tuple[OpType, int]] = []
     for line in input_iter:
         line = line.strip()
         operator, operand = ops[line[:1]], int(line[1:])
@@ -48,7 +51,8 @@ def run_tests():
     ]
 
     for test, answer in zip(tests, answers):
-        assert solve(test) == answer, (test, answer)
+        computed = solve(test)
+        assert computed == answer, (test, answer, computed)
 
 
 if __name__ == '__main__':

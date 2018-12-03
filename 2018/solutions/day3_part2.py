@@ -1,24 +1,34 @@
 import re
 import sys
+from typing import Iterable, Dict, List, Optional
 
 FABRIC_SIZE = 1000
 pattern = re.compile(r'#(\d+) @ (\d+),(\d+): (\d+)x(\d+)')
 
 
-def solve(input_iter):
-    claims = {}
-    fabric = [[[0, None] for __ in range(FABRIC_SIZE)] for _ in range(FABRIC_SIZE)]
+class FabricSquare(object):
+    def __init__(self, claim_count: int = 0, claimer: Optional[int] = None) -> None:
+        self.claim_count = claim_count
+        self.claimer = claimer
+
+
+def solve(input_iter: Iterable[str]) -> int:
+    claims: Dict[int, bool] = {}
+    fabric: List[List[FabricSquare]] = [[FabricSquare() for __ in range(FABRIC_SIZE)] for _ in range(FABRIC_SIZE)]
     for line in input_iter:
         line = line.strip()
-        claim_id, left_offset, top_offset, width, height = list(map(int, pattern.search(line.strip()).groups()))
+        match = pattern.search(line.strip())
+        if not match:
+            raise ValueError('Invalid input')
+        claim_id, left_offset, top_offset, width, height = [int(x) for x in match.groups()]
         claims[claim_id] = True
         for i in range(left_offset, left_offset + width):
             for j in range(top_offset, top_offset + height):
-                fabric[i][j][0] += 1
-                if fabric[i][j][1] is not None:
-                    claims[fabric[i][j][1]] = False
+                fabric[i][j].claim_count += 1
+                if fabric[i][j].claimer is not None:
+                    claims[fabric[i][j].claimer] = False  # type: ignore
                     claims[claim_id] = False
-                fabric[i][j][1] = claim_id
+                fabric[i][j].claimer = claim_id
 
     for claim_id in claims:
         if claims[claim_id]:

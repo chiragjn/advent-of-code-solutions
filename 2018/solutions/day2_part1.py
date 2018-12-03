@@ -1,8 +1,9 @@
 import collections
 import sys
+from typing import Iterable
 
 
-def solve(input_iter):
+def solve(input_iter: Iterable[str]) -> int:
     twos, threes = 0, 0
     for line in input_iter:
         counts = collections.Counter(line.strip()).values()
@@ -24,7 +25,8 @@ def run_tests():
     ]
 
     for test, answer in zip(tests, answers):
-        assert solve(test) == answer, (test, answer)
+        computed = solve(test)
+        assert computed == answer, (test, answer, computed)
 
 
 if __name__ == '__main__':

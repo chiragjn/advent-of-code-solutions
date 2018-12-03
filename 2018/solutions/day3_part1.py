@@ -1,15 +1,19 @@
 import re
 import sys
+from typing import Iterable, List
 
 FABRIC_SIZE = 1000
 pattern = re.compile(r'#(\d+) @ (\d+),(\d+): (\d+)x(\d+)')
 
 
-def solve(input_iter):
-    fabric = [[0 for __ in range(FABRIC_SIZE)] for _ in range(FABRIC_SIZE)]
+def solve(input_iter: Iterable[str]) -> int:
+    fabric: List[List[int]] = [[0 for __ in range(FABRIC_SIZE)] for _ in range(FABRIC_SIZE)]
     for line in input_iter:
         line = line.strip()
-        claim_id, left_offset, top_offset, width, height = list(map(int, pattern.search(line.strip()).groups()))
+        match = pattern.search(line.strip())
+        if not match:
+            raise ValueError('Invalid input')
+        claim_id, left_offset, top_offset, width, height = [int(x) for x in match.groups()]
         for i in range(left_offset, left_offset + width):
             for j in range(top_offset, top_offset + height):
                 fabric[i][j] += 1
@@ -34,7 +38,8 @@ def run_tests():
     ]
 
     for test, answer in zip(tests, answers):
-        assert solve(test) == answer, (test, answer)
+        computed = solve(test)
+        assert computed == answer, (test, answer, computed)
 
 
 if __name__ == '__main__':
