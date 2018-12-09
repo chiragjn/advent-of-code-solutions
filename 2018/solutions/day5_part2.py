@@ -4,7 +4,7 @@ from typing import List
 
 
 def compress(polymer: str) -> List[str]:
-    stack = []
+    stack: List[chr] = []
     for c in polymer:
         if stack and stack[-1] != c and stack[-1].lower() == c.lower():
             stack.pop()
