@@ -24,7 +24,7 @@ class Thread(object):
         self._timeout = job.timeout
         self.available = False
 
-    def tick(self) -> Tuple[Job, bool]:
+    def tick(self) -> Tuple[Optional[Job], bool]:
         self._time += 1
         if self._timeout > 0:
             self._timeout -= 1

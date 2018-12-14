@@ -1,6 +1,6 @@
 import queue
 import sys
-from typing import Iterable, List
+from typing import Iterable, List, Iterator
 
 
 class Node(object):
@@ -20,13 +20,13 @@ class Node(object):
 
 
 class Tree(object):
-    def __init__(self, root: Node):
+    def __init__(self, root: Node) -> None:
         self.root = root
 
-    def accumulate_metadata(self):
-        q = queue.Queue()
+    def accumulate_metadata(self) -> Iterable[int]:
+        q: queue.Queue = queue.Queue()
         q.put(self.root)
-        metadata = []
+        metadata: List[int] = []
         while not q.empty():
             node = q.get()
             metadata.extend(node.metadata)
@@ -36,7 +36,7 @@ class Tree(object):
         return metadata
 
 
-def read_node(stream: Iterable[int]) -> Node:
+def read_node(stream: Iterator[int]) -> Node:
     num_children, num_metadata = next(stream), next(stream)
     node = Node()
     for i in range(num_children):
@@ -49,7 +49,7 @@ def read_node(stream: Iterable[int]) -> Node:
 
 def solve(input_line: str) -> int:
     numbers: Iterable[int] = map(int, input_line.strip().split())
-    tree = Tree(root=read_node(stream=numbers))
+    tree = Tree(root=read_node(stream=iter(numbers)))
     return tree.root.value
 
 
