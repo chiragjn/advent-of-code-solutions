@@ -18,7 +18,7 @@ class Graph(object):
         self.data[first].add(second)
 
     def topological_order(self) -> Iterable[str]:
-        q: queue.PriorityQueue[str] = queue.PriorityQueue()
+        q: queue.PriorityQueue = queue.PriorityQueue()
         in_degree: Dict[str, int] = {v: 0 for v in self.vertices}
         for i in self.data:
             for j in self.data[i]:
