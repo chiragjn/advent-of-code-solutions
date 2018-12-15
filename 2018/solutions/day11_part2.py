@@ -53,7 +53,7 @@ def run_tests():
         '232,251,12',
     ]
 
-    for i, (test, answer) in enumerate(zip(tests, answers)):
+    for i, (test, answer) in enumerate(zip(tests, answers), start=1):
         print('Running test: {}/{}'.format(i, len(tests)))
         start = time.time()
         computed = solve(test)

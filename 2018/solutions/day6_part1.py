@@ -1,6 +1,7 @@
 import collections
 import itertools
 import sys
+import time
 from typing import Iterable, List, NamedTuple, Set
 
 
@@ -74,9 +75,13 @@ def run_tests():
         17
     ]
 
-    for test, answer in zip(tests, answers):
+    for i, (test, answer) in enumerate(zip(tests, answers), start=1):
+        print('Running test: {}/{}'.format(i, len(tests)))
+        start = time.time()
         computed = solve(test)
+        end = time.time()
         assert computed == answer, (test, answer, computed)
+        print('OK. Took {:.2f}'.format(end - start))
 
 
 if __name__ == '__main__':
