@@ -40,7 +40,7 @@ def run_tests():
     for i, (test, answer) in enumerate(zip(tests, answers), start=1):
         print('Running test: {}/{}'.format(i, len(tests)))
         start = time.time()
-        computed = solve(test, restore=False)
+        computed = solve(test)
         end = time.time()
         assert computed == answer, (test, answer, computed)
         print('OK. Took {:.2f}'.format(end - start))
