@@ -1,6 +1,6 @@
+import copy
 import sys
 import time
-import copy
 from typing import Iterable, List, Any
 
 
