@@ -1,7 +1,7 @@
 import copy
 import sys
 import time
-from typing import Iterable, List, Any
+from typing import Iterable, List
 
 
 def execute(program: List[int], noun: int, verb: int) -> int:
@@ -21,7 +21,7 @@ def execute(program: List[int], noun: int, verb: int) -> int:
     return program[0]
 
 
-def solve(input_iter: Iterable[str]) -> Any:
+def solve(input_iter: Iterable[str]) -> int:
     program = next(iter(input_iter))
     program = [int(x) for x in program.split(',')]
     for noun in range(100):

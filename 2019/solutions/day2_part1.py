@@ -1,6 +1,6 @@
 import sys
 import time
-from typing import Iterable, List, Any
+from typing import Iterable, List
 
 
 def execute(program: List[int]) -> int:
@@ -19,7 +19,7 @@ def execute(program: List[int]) -> int:
     return program[0]
 
 
-def solve(input_iter: Iterable[str], restore: bool = True) -> Any:
+def solve(input_iter: Iterable[str], restore: bool = True) -> int:
     program = next(iter(input_iter))
     program = [int(x) for x in program.split(',')]
     if restore:
