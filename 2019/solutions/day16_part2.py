@@ -1,20 +1,21 @@
+import array
 import functools
 import sys
 import time
-from typing import Iterable, List, Sequence
+from typing import Iterable, Sequence
 
 
-def csums(data: Sequence[int]) -> List[int]:
+def csums(data: Sequence[int]) -> array.array:
     sum_so_far = 0
     csums_ = []
     for item in data:
         sum_so_far += item
         csums_.append(sum_so_far)
     csums_.append(0)
-    return csums_
+    return array.array('i', csums_)
 
 
-def apply_filter(degree: int, cumulative_sums: Sequence[int]) -> int:
+def apply_filter(degree: int, cumulative_sums: array.array) -> int:
     if degree == 0:
         return 0
     N = len(cumulative_sums) - 1
@@ -22,14 +23,6 @@ def apply_filter(degree: int, cumulative_sums: Sequence[int]) -> int:
     pos_start = degree
     neg_start = 3 * degree
     answer = 0
-
-    while pos_start < N and neg_start < N:
-        pos_end = min(pos_start + degree - 1, N - 1)
-        answer += cumulative_sums[pos_end] - cumulative_sums[pos_start - 1]
-        pos_start += jump
-        neg_end = min(neg_start + degree - 1, N - 1)
-        answer -= cumulative_sums[neg_end] - cumulative_sums[neg_start - 1]
-        neg_start += jump
 
     while pos_start < N:
         pos_end = min(pos_start + degree - 1, N - 1)
@@ -45,7 +38,6 @@ def apply_filter(degree: int, cumulative_sums: Sequence[int]) -> int:
 
 def convolve(digits: str, times: int) -> str:
     digits = (0,) + tuple(int(digit) for digit in digits)
-    print(len(digits))
     params = tuple(range(len(digits)))
     for _ in range(times):
         cumulative_sums = tuple(csums(digits))
